@@ -11,7 +11,6 @@ export default class Calender extends React.Component{
 
         };
         this.calculateDays= this.calculateDays.bind(this);
-        this.calculateDaysNext= this.calculateDaysNext.bind(this);
         this.calculateDaysPrev= this.calculateDaysPrev.bind(this);
     }
     componentDidMount() {
@@ -33,7 +32,7 @@ export default class Calender extends React.Component{
         });
     }
 
-    calculateDaysNext(){
+    calculateDaysNext = () => {
         let tempArr=[];
         let days;
         this.setState({
@@ -63,12 +62,11 @@ export default class Calender extends React.Component{
         });
     }
     render() {
-
+    let mon=moment.months(this.state.month-1);
+    console.log('loggin moment in the render function..', mon);
         return(<View>
                 <Header
-                    leftComponent={{ icon: 'menu', color: '#fff' }}
-                    centerComponent={{ text: 'January', style: { color: '#fff' } }}
-                    rightComponent={{ icon: 'home', color: '#fff' }}
+                    centerComponent={{ text: mon, style: { color: '#fff' } }}
                 />
             <View style={styles.container}>
 
