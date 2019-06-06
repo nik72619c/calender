@@ -1,17 +1,21 @@
 import  React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet,TouchableOpacity} from 'react-native';
 import moment from 'moment';
 import {Button,Header} from 'react-native-elements'
+import Modal from "./modal";
 export default class Calender extends React.Component{
     constructor(){
         super();
         this.state={
             month: 1,
             daysArray: [],
+            isVisible: false
 
         };
         this.calculateDays= this.calculateDays.bind(this);
         this.calculateDaysPrev= this.calculateDaysPrev.bind(this);
+        this.openModal= this.openModal.bind(this);
+        this.closeModal=this.closeModal.bind(this);
     }
     componentDidMount() {
         this.calculateDays();
@@ -61,6 +65,18 @@ export default class Calender extends React.Component{
             this.setState({daysArray: tempArr});
         });
     }
+    openModal() {
+        console.log('open modal called..');
+        this.setState({
+            isVisible: true
+        });
+    }
+    closeModal(){
+        console.log('close modal called..');
+        this.setState({
+            isVisible: false
+        })
+    }
     render() {
     let mon=moment.months(this.state.month-1);
     console.log('loggin moment in the render function..', mon);
@@ -69,15 +85,18 @@ export default class Calender extends React.Component{
                     centerComponent={{ text: mon, style: { color: '#fff' } }}
                 />
             <View style={styles.container}>
-
+                <Modal isVisible={this.state.isVisible} closeModal={this.closeModal}/>
                 {/*<View style={styles.child}><Text style={{padding: '40%', color: 'white'}}>1</Text></View>*/}
 
 
                 {
                     this.state.daysArray.map((day,index)=>{
-                        return (<View style={styles.child} key={index}>
+                        return (<TouchableOpacity key={index} onPress={this.openModal}>
+                            <View style={styles.child} >
                             <Text style={{padding: '40%', color: 'white'}}>{day}</Text>
-                                </View>)
+                                </View>
+                            </TouchableOpacity>
+                                )
                     })
                 }
                 <View style={{
